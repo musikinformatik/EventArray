@@ -35,13 +35,13 @@ if obj is an obj,
 		^nil
 	}
 	// check one level below, so that only lists of associations are deepsearched
-	
+
 	containsAssociations {
 		^this.at(0).isAssociation
 	}
-	
+
 	// recursively iteration over all rules
-	
+
 	deepDoAssoc { arg func, allLevels=true;
 		if(this.containsAssociations) {
 			this.do { |each|
@@ -49,7 +49,7 @@ if obj is an obj,
 			}
 		}
 	}
-	
+
 	deepCollectAssoc { arg func;
 		^if(this.containsAssociations) {
 			this.collect { |each|
@@ -59,33 +59,33 @@ if obj is an obj,
 			this.copy
 		}
 	}
-	
-	
+
+
 	findMaximalDropSize {
 		var size = 0;
 		this.deepDoAssoc { |assoc| size = max(size, assoc.keyDropSize) };
 		^size
 	}
-	
+
 	findMaximalKeySize {
 		var size = 0;
 		this.deepDoAssoc { |assoc| size = max(size, assoc.keySize) };
 		^size
 	}
-	
+
 }
 
 // set is for random choice.
 + Set {
 
 	deepFindRule { arg list, index=0;
-		var randomElements = this.select { |assoc| 
-			assoc.recognise(list, index) 
+		var randomElements = this.select { |assoc|
+			assoc.recognise(list, index)
 		};
 		"randomElements: %\n".postvg(randomElements);
 		^randomElements.choose
 	}
-	
+
 	containsAssociations {
 		^this.any(_.isAssociation)
 	}
@@ -97,13 +97,13 @@ if obj is an obj,
 	isAssociation {
 		^true
 	}
-	
+
 	containsAssociations {
 		^this.value.containsAssociations
 	}
-	
+
 	deepFindRule { arg list, index=0;
-		//"searching in % Association %\n\n\n".postf( if(this.containsAssociations) 
+		//"searching in % Association %\n\n\n".postf( if(this.containsAssociations)
 		//	{ "Association" } { "" }, this);
 		if(this.containsAssociations) {
 			if(this.recognise(list, index)) {
@@ -116,7 +116,7 @@ if obj is an obj,
 		};
 		^nil
 	}
-	
+
 	deepDoAssoc { arg func, allLevels=true;
 		var deeper = this.containsAssociations;
 		if(allLevels or: { deeper.not }) { func.value(this) };
@@ -134,16 +134,16 @@ if obj is an obj,
 			func.value(this)
 		}
 	}
-	
+
 	prefixSize { ^0 }
-	
+
 	keyDropSize { ^key.keySize }
-	
+
 	keySize { ^key.keySize }
-	
+
 	keyDropDuration { ^key.eventDuration }
-	
-	
+
+
 
 }
 
@@ -153,11 +153,11 @@ if obj is an obj,
 	isAssociation {
 		^false
 	}
-	
+
 	containsAssociations {
 		^false
 	}
-	
+
 	deepFindRule { arg list, index=0, verbose=true;
 		// ("deepFindRule: %\n\n\n").postf(this);
 		^if(this.recognise(list, index)) { this } { nil }
@@ -168,11 +168,11 @@ if obj is an obj,
 	deepCollectAssoc { arg func;
 		^this
 	}
-	
+
 	vgTestRule { arg list;
 		^this.deepFindRule(list, 0).tranform(list)
 	}
-	
+
 	keySize {
 		^this.size.max(1)
 	}
@@ -182,9 +182,3 @@ if obj is an obj,
 	keySize { ^1 }
 }
 
-
-+ Tafsiran {
-	deepFindRule { arg list, index=0;
-		^rules.deepFindRule(list, index)
-	}
-}
