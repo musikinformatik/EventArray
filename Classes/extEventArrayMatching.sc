@@ -11,7 +11,6 @@
 		}
 	}
 
-
 	selectRecognised { arg list, index=0;
 		^this.select { |item|
 			item.recognise(list, index)
@@ -113,8 +112,8 @@
 			key = stream.next(item);
 			// postf("key: % value: %\n", key, item);
 			if(key.isNil) { ^true }; // match over
-			if(item.isNil) {�^false }; // match too short
-			if(key.matchAttributes(item).not) {�^false };
+			if(item.isNil) { ^false }; // match too short
+			if(key.matchAttributes(item).not) { ^false };
 			i = i + 1;
 		};
 	}
@@ -134,14 +133,14 @@
 		if(index == -1) {
 			this.reverseDo { |x, i|
 				var item = list[lastIndex - i];
-				if(item.isNil) {�^false }; // match too short
-				if(x.matchAttributes(item).not) {�^false }
+				if(item.isNil) { ^false }; // match too short
+				if(x.matchAttributes(item).not) { ^false }
 			};
 		} {
 			this.do { |x, i|
 				var item = list[i + index];
-				if(item.isNil) {�^false }; // match too short
-				if(x.matchAttributes(item).not) {�^false }
+				if(item.isNil) { ^false }; // match too short
+				if(x.matchAttributes(item).not) { ^false }
 			};
 		};
 		^true
@@ -161,7 +160,7 @@
 
 
 	eventDuration {
-		^this.sum { |event|�event.eventAt(\dur) ? 1.0 }
+		^this.sum { |event| event.eventAt(\dur) ? 1.0 }
 	}
 
 	scaleEventDuration { arg totalDur;

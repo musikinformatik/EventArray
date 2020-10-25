@@ -1,17 +1,17 @@
 /*
 
 if obj is a list,
-	actually a list of associations,
-		check each key, if it is recognised, repeat procedure with its value,
-		until something is not nil.
-	actually a list of objects,
-		try to recognise it. if it can be recognised, return it, otherwise, return nil
+actually a list of associations,
+check each key, if it is recognised, repeat procedure with its value,
+until something is not nil.
+actually a list of objects,
+try to recognise it. if it can be recognised, return it, otherwise, return nil
 
 if obj is an association,
-	try to recognise key, if it matches, return this (the assoc), otherwise return nil
+try to recognise key, if it matches, return this (the assoc), otherwise return nil
 
 if obj is an obj,
-	try to recognise it, if it matches, return this (the object), otherwise return nil
+try to recognise it, if it matches, return this (the object), otherwise return nil
 
 */
 
@@ -163,7 +163,7 @@ if obj is an obj,
 		^if(this.recognise(list, index)) { this } { nil }
 	}
 	deepDoAssoc { arg func, allLevels;
-		 ^this
+		^this
 	}
 	deepCollectAssoc { arg func;
 		^this

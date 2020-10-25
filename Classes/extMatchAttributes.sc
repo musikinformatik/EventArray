@@ -7,7 +7,7 @@
 		^this == dict
 	}
 	concattribute { arg obj, override=false;
-		^if(override) {Êobj } { this }
+		^if(override) { obj } { this }
 	}
 	deattribute { arg obj;
 		^if(this == obj) { nil } { this }
@@ -19,56 +19,56 @@
 	matchAttributes { arg dict;
 		^true
 	}
-	
+
 	concattribute { arg obj;
 		^obj
 	}
-	
+
 	deattribute { arg dict;
 		^this
 	}
 }
 
 + Dictionary {
-	
+
 	matchAttributes { arg dict;
 		if(dict.isKindOf(Dictionary)) {
 			this.pairsDo { |key, val|
-				if(val.isKindOf(AbstractFunction)) { 
-					
+				if(val.isKindOf(AbstractFunction)) {
+
 					^val.value(dict[key].value(this), dict)
-					
+
 				};
 				if(
-						key != \resource // omit resource
-						and: { dict[key].value(this) != val }
-				) { ^false } 
+					key != \resource // omit resource
+					and: { dict[key].value(this) != val }
+				) { ^false }
 			};
 			^true
 		} {
 			^false
 		}
 	}
-	
+
 	concattribute { arg dict, override=false;
 		if(dict.respondsTo(\pairsDo)) {
 			dict.pairsDo { |key, val|
-				if(override or: { this[key].isNil }) {Ê
-						//"warning: override attribute %: % by %\n".postf(key, attr[key], val);
-					this[key]Ê= val
+				if(override or: { this[key].isNil }) {
+					//"warning: override attribute %: % by %\n".postf(key, attr[key], val);
+					this[key] = val
 				};
 			}
 		} {
 			^[this, dict]
 		}
 	}
-	
+
 	deattribute { arg dict;
 		if(dict.respondsTo(\pairsDo)) {
 			dict.pairsDo { |key, val|
-					if(this[key] == val) { // maybe match item?
-						this.removeAt(key)
-					};
+				if(this[key] == val) { // maybe match item?
+					this.removeAt(key)
+				};
 			}
 		}
 	}
@@ -79,7 +79,7 @@
 	matchAttributes { arg dict;
 		^this.any(_.matchAttributes(dict))
 	}
-	
+
 	concattribute { arg obj;
 		if(this.indexOfEqual(obj).isNil) {
 			^this.add(obj)
@@ -97,11 +97,11 @@
 	matchAttributes { arg dict;
 		^this.value(dict)
 	}
-	
+
 	concattribute { arg obj;
 		^[this, obj]
 	}
-	
+
 }
 + UnaryOpFunction {
 	matchAttributes { arg dict;
